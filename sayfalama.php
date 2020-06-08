@@ -16,24 +16,29 @@ $_row = $cek->fetchAll(PDO::FETCH_ASSOC);
 
 foreach($_row as $row){
        echo $row["icerik_baslik"];
-    }
-    
-    if($Sayfa > 1){
-        echo '<a href="?q=1">İlk</a>
-        <a href="?q='; echo $Sayfa - 1; '">Önceki</a>';
-    }
+}
 
-    for($i = $Sayfa - $GorunenSayfa; $i < $Sayfa + $GorunenSayfa +1; $i++){ // i kaç ise o sayıdan başlar 1-2-3-4-5 yazmaya. mesela sayfa 7deyiz 7 - 5 = 2'dir 2 sayfadan sonra sayfalamaya başlar yani 2-3-4-5-6-7 gibi bu aynı mantıkla devam eder.
-      if($i > 0 and $i <= $Sayfa_Sayisi){
-             if($i == $Sayfa){
-                echo '<span class="say_aktif">'.$i.'</span>'; //eğer i ile sayfa değerleri aynıysa o zaman onu aktif css'si ekle
-         }else{
-                echo '<a class="say_a" href="?q='.$i.'">'.$i.'</a>'; //eğer aynı değilse normal listele
-         }
-      }
+echo '<div class="col-sm-12"><nav><ul class="pagination">';
+
+if($Sayfa > 1){
+   echo '
+   <li class="page-item"><a href="?q=1" class="page-link">İlk</a></li>
+   <li class="page-item"><a href="?q='; echo $Sayfa - 1; '" class="page-link">Önceki</a></li>';
+}
+
+for($i = $Sayfa - $GorunenSayfa; $i < $Sayfa + $GorunenSayfa +1; $i++){ // i kaç ise o sayıdan başlar 1-2-3-4-5 yazmaya. mesela sayfa 7deyiz 7 - 5 = 2'dir 2 sayfadan sonra sayfalamaya başlar yani 2-3-4-5-6-7 gibi bu aynı mantıkla devam eder.
+   if($i > 0 and $i <= $Sayfa_Sayisi){
+           if($i == $Sayfa){
+               echo '<li class="page-item active"><a href="" class="page-link">'.$i.'</a></li>'; //eğer i ile sayfa değerleri aynıysa o zaman onu aktif css'si ekle
+       }else{
+               echo '<li class="page-item"><a href="?q='.$i.'" class="page-link">'.$i.'</a></li>'; //eğer aynı değilse normal listele
+       }
    }
+}
    
-   if($Sayfa != $Sayfa_Sayisi){
-   echo '<a href="?q='; echo $Sayfa + 1; echo '">Sonraki</a>';
-   echo '<a href="?q='; echo $Sayfa_Sayisi; echo '">Son</a>';
-   }
+if($Sayfa != $Sayfa_Sayisi){
+     echo '<li class="page-item"><a href="?q='; echo $Sayfa + 1; echo '" class="page-link">Sonraki</a></li>';
+     echo '<li class="page-item"><a href="?q='; echo $Sayfa_Sayisi; echo '" class="page-link">Son</a></li>';
+}
+
+echo '</ul></nav></div>';
